@@ -23,6 +23,7 @@ class CreateMatchAnswersTable extends Migration {
 			$table->boolean('selected')->default(false);
 
 			$table->timestamps();
+			$table->softDeletes();
 		});
 
 		Schema::table('match_answers', function(Blueprint $table) {

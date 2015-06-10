@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration {
 			$table->string('fb_key', 32);
 
 			$table->timestamps();
+			$table->softDeletes();
 		});
 
 		Schema::table('users', function(Blueprint $table) {

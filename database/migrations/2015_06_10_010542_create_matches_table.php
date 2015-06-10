@@ -22,6 +22,7 @@ class CreateMatchesTable extends Migration {
 			$table->tinyInteger('rights_number')->unsigned()->default(0);
 
 			$table->timestamps();
+			$table->softDeletes();
 		});
 
 		Schema::table('matches', function(Blueprint $table) {

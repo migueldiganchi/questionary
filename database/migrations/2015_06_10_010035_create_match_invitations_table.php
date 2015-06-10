@@ -20,6 +20,7 @@ class CreateMatchInvitationsTable extends Migration {
 			$table->char('status', 1)->default('p'); // p: pending, a: accepted, r:rejected
 
 			$table->timestamps();
+			$table->softDeletes();
 		});
 
 		Schema::table('match_invitations', function(Blueprint $table) {

@@ -22,6 +22,7 @@ class CreateAnswersTable extends Migration {
 			$table->boolean('right')->default(false);
 			
 			$table->timestamps();
+			$table->softDeletes();
 		});
 
 		Schema::table('answers', function(Blueprint $table) {

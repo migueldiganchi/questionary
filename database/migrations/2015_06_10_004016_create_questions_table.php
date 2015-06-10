@@ -20,6 +20,7 @@ class CreateQuestionsTable extends Migration {
 			$table->string('text')->default('');
 
 			$table->timestamps();
+			$table->softDeletes();
 		});
 
 		Schema::table('questions', function(Blueprint $table) {

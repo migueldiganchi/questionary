@@ -22,6 +22,7 @@ class CreateMatchQuestionsTable extends Migration {
 			$table->boolean('right')->default(false);
 
 			$table->timestamps();
+			$table->softDeletes();
 		});
 
 		Schema::table('match_questions', function(Blueprint $table) {
