@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AnswersTableSeeder' => $baseDir . '/database/seeds/AnswersTableSeeder.php',
     'CreateAnswersTable' => $baseDir . '/database/migrations/2015_06_10_005044_create_answers_table.php',
     'CreateMatchAnswersTable' => $baseDir . '/database/migrations/2015_06_10_011540_create_match_answers_table.php',
     'CreateMatchInvitationsTable' => $baseDir . '/database/migrations/2015_06_10_010035_create_match_invitations_table.php',
@@ -21,6 +22,10 @@ return array(
     'File_Iterator_Factory' => $vendorDir . '/phpunit/php-file-iterator/src/Factory.php',
     'IlluminateQueueClosure' => $vendorDir . '/illuminate/queue/IlluminateQueueClosure.php',
     'Illuminate\\Foundation\\Composer' => $vendorDir . '/laravel/lumen-framework/src/Foundation/Composer.php',
+    'MatchAnswersTableSeeder' => $baseDir . '/database/seeds/MatchAnswersTableSeeder.php',
+    'MatchInvitationsTableSeeder' => $baseDir . '/database/seeds/MatchInvitationsTableSeeder.php',
+    'MatchQuestionsTableSeeder' => $baseDir . '/database/seeds/MatchQuestionsTableSeeder.php',
+    'MatchesTableSeeder' => $baseDir . '/database/seeds/MatchesTableSeeder.php',
     'PHPUnit_Exception' => $vendorDir . '/phpunit/phpunit/src/Exception.php',
     'PHPUnit_Extensions_GroupTestSuite' => $vendorDir . '/phpunit/phpunit/src/Extensions/GroupTestSuite.php',
     'PHPUnit_Extensions_PhptTestCase' => $vendorDir . '/phpunit/phpunit/src/Extensions/PhptTestCase.php',
@@ -396,6 +401,7 @@ return array(
     'PHP_Token_WHITESPACE' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_XOR_EQUAL' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_YIELD' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
+    'QuestionsTableSeeder' => $baseDir . '/database/seeds/QuestionsTableSeeder.php',
     'SebastianBergmann\\Comparator\\ArrayComparator' => $vendorDir . '/sebastian/comparator/src/ArrayComparator.php',
     'SebastianBergmann\\Comparator\\Comparator' => $vendorDir . '/sebastian/comparator/src/Comparator.php',
     'SebastianBergmann\\Comparator\\ComparisonFailure' => $vendorDir . '/sebastian/comparator/src/ComparisonFailure.php',
@@ -434,4 +440,5 @@ return array(
     'SessionHandlerInterface' => $vendorDir . '/symfony/http-foundation/Symfony/Component/HttpFoundation/Resources/stubs/SessionHandlerInterface.php',
     'TestCase' => $baseDir . '/tests/TestCase.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/Text/Template.php',
+    'UsersTableSeeder' => $baseDir . '/database/seeds/UsersTableSeeder.php',
 );
