@@ -18,6 +18,7 @@ class CreateQuestionsTable extends Migration {
 			$table->bigInteger('user_id')->unsigned();
 			$table->tinyInteger('order')->unsigned();
 			$table->string('text')->default('');
+			$table->tinyInteger('answers_number')->unsigned()->default(0);
 
 			$table->timestamps();
 			$table->softDeletes();

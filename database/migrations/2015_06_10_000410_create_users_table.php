@@ -17,7 +17,9 @@ class CreateUsersTable extends Migration {
 			$table->bigIncrements('id')->unsigned();
 			$table->string('email');
 			$table->string('name', 128)->default('');
-			$table->string('fb_key', 32);
+			$table->string('password', 32)->nullable();
+			$table->string('fb_key', 32)->nullable();
+			$table->tinyInteger('questions_number')->unsigned()->default(0);
 
 			$table->timestamps();
 			$table->softDeletes();

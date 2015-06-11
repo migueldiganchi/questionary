@@ -17,7 +17,7 @@ class CreateMatchInvitationsTable extends Migration {
 			$table->bigIncrements('id')->unsigned();
 			$table->bigInteger('host_id')->unsigned();
 			$table->bigInteger('guest_id')->unsigned();
-			$table->char('status', 1)->default('p'); // p: pending, a: accepted, r:rejected
+			$table->char('status', 1)->default('p'); // p: pending, a: accepted, r:rejected, c: canceled
 
 			$table->timestamps();
 			$table->softDeletes();

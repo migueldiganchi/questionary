@@ -17,7 +17,8 @@ class CreateMatchQuestionsTable extends Migration {
 			$table->bigIncrements('id')->unsigned();
 			$table->bigInteger('match_id')->unsigned();
 			$table->tinyInteger('order')->unsigned();
-			$table->string('text', 3)->default('');
+			$table->string('text')->default('');
+			$table->tinyInteger('answers_number')->unsigned()->default(0);
 			$table->boolean('answered')->default(false);
 			$table->boolean('right')->default(false);
 

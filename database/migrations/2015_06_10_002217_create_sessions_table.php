@@ -17,6 +17,7 @@ class CreateSessionsTable extends Migration {
 			$table->string('id', 32)->default('');
 			$table->bigInteger('user_id')->unsigned();
 			$table->string('fb_key', 64);
+			$table->datetime('expire_at');
 		
 			$table->timestamps();
 		});
