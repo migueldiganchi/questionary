@@ -36,5 +36,6 @@ return array(
     'Illuminate\\Bus\\' => array($vendorDir . '/illuminate/bus'),
     'Illuminate\\Auth\\' => array($vendorDir . '/illuminate/auth'),
     'FastRoute\\' => array($vendorDir . '/nikic/fast-route/src'),
+    'Facebook\\' => array($vendorDir . '/facebook/php-sdk-v4/src/Facebook'),
     'App\\' => array($baseDir . '/app'),
 );

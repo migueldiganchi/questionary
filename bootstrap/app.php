@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require_once __DIR__.'/../vendor/autoload.php';
 
 Dotenv::load(__DIR__.'/../');
@@ -77,6 +79,8 @@ $app->singleton(
 | totally optional, so you are not required to uncomment this line.
 |
 */
+
+Facebook\FacebookSession::setDefaultApplication(env('FACEBOOK_APP_ID'), env('FACEBOOK_APP_SECRET'));
 
 // $app->register('App\Providers\AppServiceProvider');
 
