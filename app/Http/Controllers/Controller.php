@@ -5,4 +5,9 @@ use Laravel\Lumen\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     //
+
+	function showFormatedException($obj, $obj_name) {
+
+		echo "<pre> {$obj_name} = ". print_r($obj, true) . "</pre>";
+	}
 }

@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Questionary app</title>
-</head>
-<body>
+@extends('app')
 
-	<form method="post" action="{{ $fb_helper->getLoginUrl() }}">
+@section('content')
+
+	<form method="post" action="{{ $fb_helper->getLoginUrl($fb_scopes) }}">
 		<input type='submit' value="Iniciar sesión con facebook" />
 	</form>
 
-</body>
-</html>
+@endsection

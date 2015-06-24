@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DebugController;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -12,9 +14,11 @@
 */
 
 $app->group(['namespace' => 'App\Http\Controllers'], function($group){
-	// $group->get('/', function() use ($app) {
-	//     // return $app->welcome();
-	// });
+
+	$group->get('/', [
+	    'as' 	=> 'question.index', 
+	    'uses' 	=> 'QuestionController@index'
+	]);	
 
 	$group->get('login', [
 	    'as' 	=> 'user.login', 
@@ -25,21 +29,18 @@ $app->group(['namespace' => 'App\Http\Controllers'], function($group){
 	    'as' 	=> 'user.auth', 
 	    'uses' 	=> 'UserController@auth'
 	]);
+
+	$group->get('questions', [
+	    'as' 	=> 'question.list', 
+	    'uses' 	=> 'QuestionController@index'
+	]);	
+
+
+	/* debugging */
+
+	$group->get('/debug/{method}', function ($method) {
+		$controller = new DebugController();
+	 	$controller->{$method}();
+	});
+
 });
-
-
-// $app->get('/', function() use ($app) {
-//     return $app->welcome();
-// });
-
-// $app->get('login', [
-//     'as' 	=> 'user.login', 
-// 	'uses' 	=> 'UserController@login'
-// ]);
-
-// // $app->get('login', ['uses' => 'UserController@login', 'as' => 'user.login']);
-
-// $app->get('auth', [
-//     'as' 	=> 'user.auth', 
-//     'uses' 	=> 'UserController@auth'
-// ]);
