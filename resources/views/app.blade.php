@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Questionary</title>
 
-	<link href="/css/boostrap.css" rel="stylesheet">
+	<link href="/css/bootstrap.css" rel="stylesheet">
 	<link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
 	<link href="/css/app.css" rel="stylesheet">
 
