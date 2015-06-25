@@ -15,10 +15,11 @@ class CreateUsersTable extends Migration {
 		Schema::create('users', function(Blueprint $table)
 		{
 			$table->bigIncrements('id')->unsigned();
-			$table->string('email');
+			$table->string('email', 255);
 			$table->string('name', 128)->default('');
 			$table->string('password', 32)->nullable();
-			$table->string('fb_key', 32)->nullable();
+			$table->string('fb_id', 32)->nullable();
+			$table->timestamp('last_login')->nullable();
 			$table->tinyInteger('questions_number')->unsigned()->default(0);
 
 			$table->timestamps();
@@ -27,6 +28,7 @@ class CreateUsersTable extends Migration {
 
 		Schema::table('users', function(Blueprint $table) {
             $table->unique('email');
+            $table->index('fb_id');
         });
 	}
 
