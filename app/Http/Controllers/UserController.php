@@ -19,7 +19,7 @@ class UserController extends Controller
 
     public function login() {
 
-        $fb_scopes = array('email', 'public_profile', 'read_custom_friendlists', 'user_friends');
+        $fb_scopes = array('public_profile', 'email', 'read_custom_friendlists', 'user_friends');
 
         $fb_helper = new FacebookRedirectLoginHelper(route('user.auth'));
 
@@ -42,36 +42,53 @@ class UserController extends Controller
         if (!$session) {
             return redirect('user.login')->with('error_message', 'El usuario no tiene cuenta.');
         }
+        
+        $this->showFormatedException($session, 'session');
 
         // read data from the user
         $me = (new FacebookRequest($session, 'GET', '/me'))->execute()->getGraphObject(GraphUser::className());
 
         $this->showFormatedException($me, 'me');
+        
+        // Get the facebook profile ID
+        $fb_id = $me->getProperty('id');
 
-        // 1. verificar si el usuario logueado tiene cuenta con el facebook id.
-        $user = User::where('fb_key', '=', $me->getProperty('id'))->first();
+        // Check if user exists for current facebook ID.
+        $user = User::where('fb_id', '=', $fb_id)->first();
 
-        // 2. si no viene con facebook id, buscarlo por el correo y asociarle el facebook id. 
+        // If user does not exists, check by email
         if (!$user) {
-
             $user = User::where('email', '=', $me->getProperty('email'))->first();
-
-            // 3. si no tiene ninguno, crearlo y le seteamos el facebook id.
-            if (!$user) {
-
-                // creamos el usuario
-                $user = User::create( array(
-                    'email'     => $me->getProperty('email'),
-                    'name'      => $me->getProperty('name')
-                ));
-            }
-
-            $user->fb_key = $me->getProperty('id');
         }
 
-        // @todo:
-        // $user->last_login = date('Y-m-d H:i:s');
-        // $user->save();
+        // If user is not found, create it using facebook profile information
+        if (!$user) {
+			$user = User::create( array(
+				'email' => $me->getProperty('email'),
+				'name' => $me->getProperty('name'),
+				'fb_id' => $fb_id,
+			));
+		}
+
+		// Set current facebook ID if has a different one
+		if ($user->fb_id != $fb_id) {
+			$user->fb_id = $fb_id;
+		}
+
+		// Update user login time
+        $user->last_login = date('Y-m-d H:i:s');
+        $user->save();
+        
+        // @todo: create session
+        //Session::create(array(
+        //	'id' => md5(Request::ip().time()),
+        //	'user_id' => $user->id,
+        //	'ip' => Request::ip(),
+        //	'expires_at' => date('Y-m-d H:i:s', strtotime('+2 hours')),
+		//));
+		
+		$this->showFormatedException($user->toArray(), 'user');		
+		exit();
 
         return redirect()->route('question.index');
     }
