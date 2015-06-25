@@ -12,19 +12,11 @@ abstract class Model extends BaseModel {
 
 
 	/**
-	 * Validation rules for model store
+	 * Validation rules for this model
 	 * 
-	 * @var array $store_validation_rules
+	 * @var array $validation_rules
 	 */
-	public static $store_validation_rules = array();
-
-
-	/**
-	 * Validation rules for model update
-	 * 
-	 * @var array $update_validation_rules
-	 */
-	public static $update_validation_rules = array();
+	public static $validation_rules = array();
 
 
 	/**
@@ -68,7 +60,7 @@ abstract class Model extends BaseModel {
 	 * 
 	 * @return boolean
 	 */
-	public function validate($rules, $errors = null) {
+	public function validate($rules = null, $errors = null) {
 		$this->validation = Validator::make($this->attributes, $rules, (array) $errors);
 		
 		return $this->validation->passes();
@@ -78,36 +70,26 @@ abstract class Model extends BaseModel {
 	/**
 	 * Execute store validation rules for this model on the specified data
 	 * 
-	 * @param array|null $rules
-	 * @param array|null $errors
-	 * 
 	 * @return boolean
 	 */
-	public function validateStore($extra_rules = null, $extra_errors = null) {
-		// Add or overwrite store rules and error messages
-		$rules = array_merge_recursive(static::$store_validation_rules, (array) $extra_rules); 
-		$errors = array_merge_recursive(static::$validation_errors, (array) $extra_errors);
+	public function validateStore() {
+		// Add or overwrite validation rules and error messages
 
 		// Execute validation
-		return $this->validate($rules, $errors);
+		return $this->validate(static::$validation_rules, static::$validation_errors);
 	}
 
 
 	/**
 	 * Execute update validation rules for this model on the specified data
 	 * 
-	 * @param array|null $rules
-	 * @param array|null $errors
-	 * 
 	 * @return boolean
 	 */
-	public function validateUpdate($extra_rules = null, $extra_errors = null) {
-		// Add or overwrite update rules and error messages
-		$rules = array_merge_recursive(static::$update_validation_rules, (array) $extra_rules); 
-		$errors = array_merge_recursive(static::$validation_errors, (array) $extra_errors);
+	public function validateUpdate() {
+		// Add or overwrite validation rules and error messages
 
 		// Execute validation
-		return $this->validate($rules, $errors);
+		return $this->validate(static::$validation_rules, static::$validation_errors);
 	}
 	
 	

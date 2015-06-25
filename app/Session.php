@@ -8,7 +8,12 @@ class Session extends Model {
 	protected $table = 'sessions';
 
 	// Validation rules for model store
-	public static $store_validation_rules = array();
+	public static $store_validation_rules = array(
+		'id' => ['required', 'string', 'max:32'],
+		'user_id' => ['integer', 'min:0'],
+		'fb_key' => ['string', 'max:64'],
+		'expire_at' => ['date'],
+	);
 
 	// Validation rules for model update
 	public static $update_validation_rules = array();
