@@ -26,16 +26,16 @@ class UserController extends Controller
         return view('user.login', compact('fb_helper', 'fb_scopes'));
     }
 
-    public function auth()
+    public function auth(Request $request)
     {
         $fb_helper = new FacebookRedirectLoginHelper(route('user.auth'));
 
         try {
           $session = $fb_helper->getSessionFromRedirect();
         } catch(FacebookRequestException $ex) {
-          $this->showFormatedException($ex, 'ex'); exit();
+          $this->showFormatedObject($ex, 'ex'); exit();
         } catch(\Exception $ex) {
-          $this->showFormatedException($ex, 'ex'); exit();
+          $this->showFormatedObject($ex, 'ex'); exit();
         }
 
         // check if the user has been logged
@@ -43,12 +43,8 @@ class UserController extends Controller
             return redirect('user.login')->with('error_message', 'El usuario no tiene cuenta.');
         }
         
-        $this->showFormatedException($session, 'session');
-
         // read data from the user
         $me = (new FacebookRequest($session, 'GET', '/me'))->execute()->getGraphObject(GraphUser::className());
-
-        $this->showFormatedException($me, 'me');
         
         // Get the facebook profile ID
         $fb_id = $me->getProperty('id');
@@ -79,16 +75,22 @@ class UserController extends Controller
         $user->last_login = date('Y-m-d H:i:s');
         $user->save();
         
-        // @todo: create session
-        //Session::create(array(
-        //	'id' => md5(Request::ip().time()),
-        //	'user_id' => $user->id,
-        //	'ip' => Request::ip(),
-        //	'expires_at' => date('Y-m-d H:i:s', strtotime('+2 hours')),
-		//));
-		
-		$this->showFormatedException($user->toArray(), 'user');		
-		exit();
+        // create db session
+        $db_session = Session::create(array(
+            'id' => md5($request->getClientIp().time()), 
+            'user_id' => $user->id,
+            'fb_key' => $user->fb_id,
+            'ip' => $request->getClientIp(),
+            'payload' => time(), 
+            'expires_at' => date('Y-m-d H:i:s', strtotime('+2 hours')),
+    	));
+
+        // set sessions vars
+        $request->session()->put('id', $db_session->id);
+        $request->session()->put('user_id', $db_session->user_id);
+        $request->session()->put('fb_key', $db_session->fb_key);
+        $request->session()->put('ip', $db_session->ip);
+        $request->session()->put('expires_at', $db_session->expires_at);
 
         return redirect()->route('question.index');
     }
@@ -98,3 +100,4 @@ class UserController extends Controller
     }
 
 }
+

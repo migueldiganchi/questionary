@@ -7,6 +7,8 @@ class Session extends Model {
 	// Database table
 	protected $table = 'sessions';
 
+	protected $fillable = array('id', 'ip', 'user_id', 'fb_key', 'expires_at');
+
 	// Validation rules for model store
 	public static $store_validation_rules = array(
 		'id' => ['required', 'string', 'max:32'],
@@ -20,7 +22,6 @@ class Session extends Model {
 
 	// Error Messages for model validation
 	public static $validation_errors = array();
-
 
 	/**
 	 * Relationship with users

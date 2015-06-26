@@ -14,11 +14,13 @@ class CreateSessionsTable extends Migration {
 	{
 		Schema::create('sessions', function(Blueprint $table)
 		{
-			$table->string('id', 32)->nullable();
+			$table->string('id', 32)->unique();
 			$table->bigInteger('user_id')->unsigned();
 			$table->string('fb_key', 64);
 			$table->string('ip', 45);
 			$table->timestamp('expires_at');
+			$table->text('payload');
+			$table->integer('last_activity');
 		
 			$table->timestamps();
 		});
@@ -42,4 +44,3 @@ class CreateSessionsTable extends Migration {
 	}
 
 }
-
