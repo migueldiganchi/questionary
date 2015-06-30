@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSessionsTable extends Migration {
+class CreateUserSessionsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,23 +12,22 @@ class CreateSessionsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('sessions', function(Blueprint $table)
+		Schema::create('user_sessions', function(Blueprint $table)
 		{
-			$table->string('id', 32)->unique();
+			$table->string('session_id', 32)->unique();
 			$table->bigInteger('user_id')->unsigned();
-			$table->string('fb_key', 64);
+			$table->string('fb_token', 64);
 			$table->string('ip', 45);
 			$table->timestamp('expires_at');
-			$table->text('payload');
-			$table->integer('last_activity');
+			$table->text('data')->nullable();
 		
 			$table->timestamps();
 		});
 
-		Schema::table('sessions', function(Blueprint $table) {
-			$table->primary('id');
+		Schema::table('user_sessions', function(Blueprint $table) {
+			$table->primary('session_id');
             $table->index('user_id');
-            $table->index('fb_key');
+            $table->index('fb_token');
             $table->index('ip');
         });
 	}
@@ -40,7 +39,7 @@ class CreateSessionsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('sessions');
+		Schema::drop('user_sessions');
 	}
 
 }

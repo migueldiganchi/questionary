@@ -74,7 +74,7 @@ class User extends Model
 	 * Relationship with sessions
 	 */
 	public function sessions() {
-		return $this->hasMany('App\Session', 'user_id', 'id');
+		return $this->hasMany('App\UserSession', 'user_id', 'session_id');
 	}
 
 	/**

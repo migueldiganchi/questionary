@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Session;
+use App\UserSession;
 use App\User;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 use Facebook;
 use Facebook\FacebookRequest;
@@ -16,7 +17,6 @@ use Facebook\FacebookRedirectLoginHelper;
 
 class UserController extends Controller
 {
-
     public function login() {
 
         $fb_scopes = array('public_profile', 'email', 'read_custom_friendlists', 'user_friends');
@@ -26,7 +26,7 @@ class UserController extends Controller
         return view('user.login', compact('fb_helper', 'fb_scopes'));
     }
 
-    public function auth(Request $request)
+    public function auth(Request $request, Response $response)
     {
         $fb_helper = new FacebookRedirectLoginHelper(route('user.auth'));
 
@@ -71,28 +71,22 @@ class UserController extends Controller
 			$user->fb_id = $fb_id;
 		}
 
-		// Update user login time
+        // Update user login time
         $user->last_login = date('Y-m-d H:i:s');
         $user->save();
         
         // create db session
-        $db_session = Session::create(array(
-            'id' => md5($request->getClientIp().time()), 
+        $db_session = UserSession::create(array(
+            'session_id' => md5( $user->email . $request->getClientIp() . time() ), 
             'user_id' => $user->id,
-            'fb_key' => $user->fb_id,
-            'ip' => $request->getClientIp(),
-            'payload' => time(), 
-            'expires_at' => date('Y-m-d H:i:s', strtotime('+2 hours')),
+            'fb_token' => $user->fb_id,
+            'ip' => $request->getClientIp()
     	));
 
         // set sessions vars
-        $request->session()->put('id', $db_session->id);
-        $request->session()->put('user_id', $db_session->user_id);
-        $request->session()->put('fb_key', $db_session->fb_key);
-        $request->session()->put('ip', $db_session->ip);
-        $request->session()->put('expires_at', $db_session->expires_at);
-
-        return redirect()->route('question.index');
+        return redirect()->route('question.index')->withCookies(array(
+            cookie(UserSession::$COOKIE_NAME, $db_session->session_id, UserSession::$LIFE_TIME)
+        ));
     }
 
     public function logout() {

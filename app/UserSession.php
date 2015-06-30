@@ -2,19 +2,24 @@
 
 use App\Model;
 
-class Session extends Model {
+class UserSession extends Model {
+
+	static $COOKIE_NAME = 'app_key';
+
+	static $LIFE_TIME = 60;
 
 	// Database table
-	protected $table = 'sessions';
+	protected $table = 'user_sessions';
 
-	protected $fillable = array('id', 'ip', 'user_id', 'fb_key', 'expires_at');
+	protected $guarded = array();
+	// protected $fillable = array('id', 'ip', 'user_id', 'fb_token', 'expires_at');
 
 	// Validation rules for model store
 	public static $store_validation_rules = array(
-		'id' => ['required', 'string', 'max:32'],
+		'session_id' => ['required', 'string', 'max:32'],
 		'user_id' => ['integer', 'min:0'],
-		'fb_key' => ['string', 'max:64'],
-		'expire_at' => ['date'],
+		'fb_token' => ['string', 'max:64'],
+		'expires_at' => ['date'],
 	);
 
 	// Validation rules for model update
@@ -36,8 +41,8 @@ class Session extends Model {
 	 * @return Session
 	 */
 	public static function current() {
-//		$session_id = ;
-//		return static::find($session_id);
+	//	$session_id = ;
+	//	return static::find($session_id);
 	}
 
 }

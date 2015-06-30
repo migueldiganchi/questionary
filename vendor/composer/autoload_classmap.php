@@ -13,7 +13,7 @@ return array(
     'CreateMatchQuestionsTable' => $baseDir . '/database/migrations/2015_06_10_010926_create_match_questions_table.php',
     'CreateMatchesTable' => $baseDir . '/database/migrations/2015_06_10_010542_create_matches_table.php',
     'CreateQuestionsTable' => $baseDir . '/database/migrations/2015_06_10_004016_create_questions_table.php',
-    'CreateSessionsTable' => $baseDir . '/database/migrations/2015_06_10_002217_create_sessions_table.php',
+    'CreateUserSessionsTable' => $baseDir . '/database/migrations/2015_06_10_002217_create_user_sessions_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2015_06_10_000410_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'ExampleTest' => $baseDir . '/tests/ExampleTest.php',

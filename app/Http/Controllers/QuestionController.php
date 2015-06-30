@@ -4,17 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\UserSession;
 
 class QuestionController extends Controller
 {
 
     public function index(Request $request) {
 
-    	$expires_at = $request->session()->get('expires_at');
+    	$session_id = $request->cookie(UserSession::$COOKIE_NAME);
 
-		$this->showFormatedObject($expires_at, 'expires_at');
+    	// @todo: get user data with session_id
+
+		$this->showFormatedObject($session_id, 'session_id');
 
        	return view('question.index');
     }
-
+    
 }
