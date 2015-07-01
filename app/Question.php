@@ -16,7 +16,6 @@ class Question extends Model
 		'answers_number' => ['integer', 'between:0,255'],
 	);
 
-
 	// Error Messages for model validation
 	public static $validation_errors = array(
 		'id.integer' => 'question_id_invalid_type',

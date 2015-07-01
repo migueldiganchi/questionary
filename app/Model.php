@@ -5,6 +5,9 @@ use Validator;
 
 abstract class Model extends BaseModel {
 
+	// Unguard all attributes
+	protected $guarded = array();
+
 	/**
 	 * Validation option for this model
 	 */

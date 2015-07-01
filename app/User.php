@@ -7,6 +7,9 @@ class User extends Model
 	// Database table
 	protected $table = 'users';
 
+	// Hidden attributes
+	protected $hidden = array('password');
+
 	// Validation rules for model
 	public static $validation_rules = array(
 		'id' => ['integer', 'min:0'],
@@ -52,7 +55,7 @@ class User extends Model
 		// Execute validation
 		return $this->validate($validation_rules, static::$validation_errors);
 	}
-	
+
 	/**
 	 * Executes update validation rules for this model
 	 * 
@@ -68,7 +71,6 @@ class User extends Model
 		// Execute validation
 		return $this->validate($validation_rules, static::$validation_errors);
 	}
-
 
 	/**
 	 * Relationship with sessions

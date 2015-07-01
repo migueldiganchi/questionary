@@ -11,9 +11,6 @@ class UserSession extends Model {
 	// Database table
 	protected $table = 'user_sessions';
 
-	protected $guarded = array();
-	// protected $fillable = array('id', 'ip', 'user_id', 'fb_token', 'expires_at');
-
 	// Validation rules for model store
 	public static $store_validation_rules = array(
 		'session_id' => ['required', 'string', 'max:32'],
