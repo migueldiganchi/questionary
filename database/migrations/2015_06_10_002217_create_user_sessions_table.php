@@ -16,9 +16,9 @@ class CreateUserSessionsTable extends Migration {
 		{
 			$table->string('session_id', 32)->unique();
 			$table->bigInteger('user_id')->unsigned();
-			$table->string('fb_token', 64);
 			$table->string('ip', 45);
 			$table->timestamp('expires_at');
+			$table->string('fb_token', 255);
 			$table->text('data')->nullable();
 		
 			$table->timestamps();
@@ -26,10 +26,9 @@ class CreateUserSessionsTable extends Migration {
 
 		Schema::table('user_sessions', function(Blueprint $table) {
 			$table->primary('session_id');
-            $table->index('user_id');
-            $table->index('fb_token');
-            $table->index('ip');
-        });
+			$table->index('user_id');
+			$table->index('ip');
+		});
 	}
 
 	/**
