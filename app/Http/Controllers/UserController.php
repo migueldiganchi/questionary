@@ -1,6 +1,4 @@
-<?php 
-
-namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\UserSession;
@@ -31,20 +29,20 @@ class UserController extends Controller
         $fb_helper = new FacebookRedirectLoginHelper(route('user.auth'));
 
         try {
-          $session = $fb_helper->getSessionFromRedirect();
+          $fb_session = $fb_helper->getSessionFromRedirect();
         } catch(FacebookRequestException $ex) {
           $this->showFormatedObject($ex, 'ex'); exit();
         } catch(\Exception $ex) {
           $this->showFormatedObject($ex, 'ex'); exit();
         }
-
+        
         // check if the user has been logged
-        if (!$session) {
+        if (!$fb_session) {
             return redirect('user.login')->with('error_message', 'El usuario no tiene cuenta.');
         }
         
         // read data from the user
-        $me = (new FacebookRequest($session, 'GET', '/me'))->execute()->getGraphObject(GraphUser::className());
+        $me = (new FacebookRequest($fb_session, 'GET', '/me'))->execute()->getGraphObject(GraphUser::className());
         
         // Get the facebook profile ID
         $fb_id = $me->getProperty('id');
@@ -79,18 +77,21 @@ class UserController extends Controller
         $db_session = UserSession::create(array(
             'session_id' => md5( $user->email . $request->getClientIp() . time() ), 
             'user_id' => $user->id,
-            'fb_token' => $user->fb_id,
-            'ip' => $request->getClientIp()
+            'fb_token' => $fb_session->getToken(),
+            'ip' => $request->getClientIp(),
+            'expires_at' => date('Y-m-d H:i:s', time() + UserSession::$LIFE_TIME * 60),
     	));
 
         // set sessions vars
         return redirect()->route('question.index')->withCookies(array(
-            cookie(UserSession::$COOKIE_NAME, $db_session->session_id, UserSession::$LIFE_TIME)
+            cookie(UserSession::$COOKIE_NAME, $db_session->session_id, UserSession::$LIFE_TIME),
         ));
     }
 
     public function logout() {
-
+    	return redirect()->route('home.index')->withCookies(array(
+            cookie(UserSession::$COOKIE_NAME, '', '-10 year'),
+        ));
     }
 
 }

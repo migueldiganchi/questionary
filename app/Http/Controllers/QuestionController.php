@@ -1,9 +1,8 @@
-<?php 
+<?php namespace App\Http\Controllers;
 
-namespace App\Http\Controllers;
+use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\UserSession;
 
 class QuestionController extends Controller
@@ -11,11 +10,10 @@ class QuestionController extends Controller
 
     public function index(Request $request) {
 
-    	$session_id = $request->cookie(UserSession::$COOKIE_NAME);
-
-    	// @todo: get user data with session_id
-
-		$this->showFormatedObject($session_id, 'session_id');
+		$session = UserSession::current();
+//		$this->showFormatedObject($current_session, '$session');
+    	$user = $session->user;
+    	$this->showFormatedObject($user, '$user');
 
        	return view('question.index');
     }
