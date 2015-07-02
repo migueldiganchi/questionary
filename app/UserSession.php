@@ -8,9 +8,12 @@ class UserSession extends Model {
 
 	static $LIFE_TIME = 60;
 
+	// Current session
+	static $current = null;
+
 	// Database table
 	protected $table = 'user_sessions';
-
+	
 	// Validation rules for model store
 	public static $store_validation_rules = array(
 		'session_id' => ['required', 'string', 'max:32'],
@@ -20,7 +23,13 @@ class UserSession extends Model {
 	);
 
 	// Validation rules for model update
-	public static $update_validation_rules = array();
+	public static $update_validation_rules = array(
+		'session_id.required' => 'user_session_id_required',
+		'session_id.string' => 'user_session_id_invalid_type',
+		'session_id.max' => 'user_session_id_invalid_value',
+		'user_id.integer' => 'user_session_id_invalid_type',
+		'user_id.min' => 'user_session_user_id_invalid_value',
+	);
 
 	// Error Messages for model validation
 	public static $validation_errors = array();
@@ -37,9 +46,12 @@ class UserSession extends Model {
 	 * 
 	 * @return Session
 	 */
-	public static function current() {
-	//	$session_id = ;
-	//	return static::find($session_id);
+	public static function current($session = null) {
+		
+		if (!is_null($session)) {
+			static::$current = $session;
+		}
+		
+		return static::$current;
 	}
-
 }

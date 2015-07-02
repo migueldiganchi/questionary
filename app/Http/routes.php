@@ -16,8 +16,8 @@ use App\Http\Controllers\DebugController;
 $app->group(['namespace' => 'App\Http\Controllers'], function($group){
 
 	$group->get('/', [
-	    'as' 	=> 'question.index', 
-	    'uses' 	=> 'QuestionController@index'
+	    'as' 	=> 'home.index', 
+	    'uses' 	=> 'HomeController@index'
 	]);	
 
 	$group->get('login', [
@@ -29,18 +29,24 @@ $app->group(['namespace' => 'App\Http\Controllers'], function($group){
 	    'as' 	=> 'user.auth', 
 	    'uses' 	=> 'UserController@auth'
 	]);
+	
+	$group->get('logout', [
+	    'as' 	=> 'user.logout', 
+		'uses' 	=> 'UserController@logout'
+	]);
 
 	$group->get('questions', [
-	    'as' 	=> 'question.list', 
-	    'uses' 	=> 'QuestionController@index'
-	]);	
+	    'as' 	=> 'question.index', 
+	    'uses' 	=> 'QuestionController@index',
+	    'middleware' => 'auth',
+	]);
 
 
-	/* debugging */
-
+	// debugging
 	$group->get('/debug/{method}', function ($method) {
 		$controller = new DebugController();
 	 	$controller->{$method}();
 	});
 
 });
+
