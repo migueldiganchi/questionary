@@ -14,6 +14,9 @@ class UserSession extends Model {
 	// Database table
 	protected $table = 'user_sessions';
 	
+	// Table primary key
+	protected $primaryKey = 'session_id';
+	
 	// Validation rules for model store
 	public static $store_validation_rules = array(
 		'session_id' => ['required', 'string', 'max:32'],
@@ -44,7 +47,7 @@ class UserSession extends Model {
 	/**
 	 * Retrieves the current session
 	 * 
-	 * @return Session
+	 * @return UserSession
 	 */
 	public static function current($session = null) {
 		
@@ -53,5 +56,21 @@ class UserSession extends Model {
 		}
 		
 		return static::$current;
+	}
+	
+	/**
+	 * Unset the current session
+	 */
+	public static function unsetCurrent() {
+		static::$current = null;
+	}
+	
+	/**
+	 * Check if exists logged in session
+	 * 
+	 * @return Boolean
+	 */ 
+	public static function isLoggedIn() {
+		return isset(static::$current);
 	}
 }

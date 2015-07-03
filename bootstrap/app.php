@@ -63,11 +63,12 @@ $app->middleware([
     'Illuminate\Session\Middleware\StartSession',
     'Illuminate\View\Middleware\ShareErrorsFromSession',
     'Laravel\Lumen\Http\Middleware\VerifyCsrfToken',
+    'App\Http\Middleware\LoadUserSession',
 ]);
 
 
 $app->routeMiddleware([
-	'auth' => 'App\Http\Middleware\Auth',
+	'require-auth' => 'App\Http\Middleware\RequireAuth',
 ]);
 
 /*
@@ -83,7 +84,7 @@ $app->routeMiddleware([
 
 Facebook\FacebookSession::setDefaultApplication(env('FACEBOOK_APP_ID'), env('FACEBOOK_APP_SECRET'));
 
-// $app->register('App\Providers\AppServiceProvider');
+$app->register('App\Providers\AppServiceProvider');
 
 /*
 |--------------------------------------------------------------------------

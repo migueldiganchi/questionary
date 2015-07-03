@@ -6,6 +6,7 @@ use App\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Cookie;
 
 use Facebook;
 use Facebook\FacebookRequest;
@@ -73,22 +74,29 @@ class UserController extends Controller
         $user->last_login = date('Y-m-d H:i:s');
         $user->save();
         
-        // create db session
-        $db_session = UserSession::create(array(
+        // create new session
+        $new_session = UserSession::create(array(
             'session_id' => md5( $user->email . $request->getClientIp() . time() ), 
             'user_id' => $user->id,
             'fb_token' => $fb_session->getToken(),
             'ip' => $request->getClientIp(),
             'expires_at' => date('Y-m-d H:i:s', time() + UserSession::$LIFE_TIME * 60),
     	));
+    	
+    	Cookie::unqueue(UserSession::$COOKIE_NAME);
+    	UserSession::current($new_session);
 
         // set sessions vars
         return redirect()->route('question.index')->withCookies(array(
-            cookie(UserSession::$COOKIE_NAME, $db_session->session_id, UserSession::$LIFE_TIME),
+            cookie(UserSession::$COOKIE_NAME, $new_session->session_id, UserSession::$LIFE_TIME),
         ));
     }
 
     public function logout() {
+    	// Unset current session
+    	UserSession::unsetCurrent();
+    	
+    	// Unset session cookie and redirect to Home page
     	return redirect()->route('home.index')->withCookies(array(
             cookie(UserSession::$COOKIE_NAME, '', '-10 year'),
         ));

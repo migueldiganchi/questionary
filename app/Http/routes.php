@@ -38,7 +38,7 @@ $app->group(['namespace' => 'App\Http\Controllers'], function($group){
 	$group->get('questions', [
 	    'as' 	=> 'question.index', 
 	    'uses' 	=> 'QuestionController@index',
-	    'middleware' => 'auth',
+	    'middleware' => 'require-auth',
 	]);
 
 
