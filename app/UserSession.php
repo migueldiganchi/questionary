@@ -13,7 +13,14 @@ class UserSession extends Model {
 
 	// Database table
 	protected $table = 'user_sessions';
-	
+
+	// Primary Key
+	protected $primaryKey = 'session_id';
+
+	// Disable auto-increment for primary key
+	public $incrementing = false;
+
+
 	// Validation rules for model store
 	public static $store_validation_rules = array(
 		'session_id' => ['required', 'string', 'max:32'],
