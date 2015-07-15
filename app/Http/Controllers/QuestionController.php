@@ -11,11 +11,9 @@ class QuestionController extends Controller
     public function index(Request $request) {
 
 		$session = UserSession::current();
-//		$this->showFormatedObject($current_session, '$session');
     	$user = $session->user;
-    	$this->showFormatedObject($user, '$user');
 
-       	return view('question.index');
+       	return view('question.index', compact('user'));
     }
     
 }

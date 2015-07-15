@@ -17,7 +17,8 @@ $app->group(['namespace' => 'App\Http\Controllers'], function($group){
 
 	$group->get('/', [
 	    'as' 	=> 'home.index', 
-	    'uses' 	=> 'HomeController@index'
+	    'uses' 	=> 'HomeController@index',
+	    'middleware' => 'require-auth'
 	]);	
 
 	$group->get('login', [
@@ -29,6 +30,11 @@ $app->group(['namespace' => 'App\Http\Controllers'], function($group){
 	    'as' 	=> 'user.auth', 
 	    'uses' 	=> 'UserController@auth'
 	]);
+
+	$group->get('auth/facebook', [
+	    'as' 	=> 'user.auth.facebook', 
+	    'uses' 	=> 'UserController@authFacebook'
+	]);
 	
 	$group->get('logout', [
 	    'as' 	=> 'user.logout', 
@@ -38,7 +44,7 @@ $app->group(['namespace' => 'App\Http\Controllers'], function($group){
 	$group->get('questions', [
 	    'as' 	=> 'question.index', 
 	    'uses' 	=> 'QuestionController@index',
-	    'middleware' => 'require-auth',
+	    'middleware' => 'require-auth'
 	]);
 
 
