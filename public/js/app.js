@@ -18,15 +18,19 @@ $(document).ready(function() {
 			version: 'v2.3'
 		});
  	
-		// getting login status
+		ajaxLoading(true);
+
 		FB.getLoginStatus(handleFacebookResponse);
 
 		// FB methods
 		function doLogin() {
+
+			ajaxLoading(true);
+
 			FB.login(handleFacebookResponse, { scope: 'public_profile, email, read_custom_friendlists, user_friends' });
 		}
 
-		function handleFacebookResponse(fb_response){
+		function handleFacebookResponse(fb_response) {
 
 			if (fb_response.status === 'connected') {
 
@@ -40,23 +44,34 @@ $(document).ready(function() {
 
 						alert(message);
 
+						ajaxLoading(false);
+
 						return;
 					}
 
 					// success
-					alert("hide login panel, show main form & get the user profile with: " + app_response.data.session_id);
+
+					// alert("hide login panel, show main form & get the user profile with: " + app_response.data.session_id);
 
 					// 1. hide login panel
 
-					// 2. show questions panel
+					$('#login').addClass('hidden');
+
+					$('#home, #options-menu').removeClass('hidden');
 
 				}, 'json');
 
 			} else if (fb_response.status === 'not_authorized') {
 				alert("El usuario no esta autorizado para acceder a la aplicación.");
 			} else {
-				alert("hide other panels & show login form");
+
+				$('#login').removeClass('hidden');
+
+				$('#home').addClass('hidden');
 			}
+
+			// ajaxLoading: off
+			ajaxLoading(false);
 		}
 
 		// control events
@@ -68,6 +83,26 @@ $(document).ready(function() {
 			return false;
 		});
 
+		// questions handlers
+		$('.btn-group-vertical .btn').click(function(e){
+			alert("panel loading");
+		});
+
+		// invitations handlers
+
+		// matches hanlders
+
 	});
 
+	function showMessage(show, message, type) {
+		if (show) {
+			// @todo: show message
+		}
+	}
+
+	function ajaxLoading(on){
+		alert('ajax-loading: ' + on);
+	}
+
 });
+

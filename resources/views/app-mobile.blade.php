@@ -30,9 +30,9 @@
 			</div>
 		</div>
 
-		<div class="row login hidden">
+		<div class="row hidden" id="login">
 			<div class="col-md-12">
-				<form id="login_form" method="post" action="{{ $fb_helper->getLoginUrl($fb_scopes) }}">
+				<form id="login_form" method="post" action="{{ $fb_helper->getLoginUrl($fb_scopes) }}" >
 					<input type='submit' class="btn" value="Iniciar sesión con facebook" />
 				</form>
 			</div>
@@ -42,9 +42,10 @@
 			<div class="col-md-offset-2 col-md-8">
 
 				<div class="row">
+
 					<div class="col-md-3">
 
-						<div class="btn-group-vertical" role="group" id="options-menu">
+						<div class="btn-group-vertical hidden" role="group" id="options-menu">
 							<a class="btn btn-default questions">Tus preguntas</a>
 							<a class="btn btn-default invitations active">Invitaciones</a>
 							<a class="btn btn-default matchs">Partidas</a>
@@ -54,21 +55,27 @@
 
 					<div class="col-md-9">
 
-						<div class="panel panel-default" id="questions">
+						<div class="panel panel-default hidden" id="home">
 							<div class="panel-body">
-								@yield('content')
+								home 
+							</div>
+						</div>
+
+						<div class="panel panel-default hidden" id="questions">
+							<div class="panel-body">
+								questions
 							</div>
 						</div>
 
 						<div class="panel panel-default hidden" id="invitations">
 							<div class="panel-body">
-								...
+								invitations
 							</div>
 						</div>
 
 						<div class="panel panel-default hidden" id="matches">
 							<div class="panel-body">
-								...
+								matches
 							</div>
 						</div>
 
@@ -87,8 +94,6 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap-toggle.min.js"></script>
 	<script src="/js/jquery.history.js"></script>
-<!-- 
 	<script src="/js/app.js"></script>
- --> 
 </body>
 </html>
