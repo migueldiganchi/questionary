@@ -1,5 +1,6 @@
 <?php namespace App;
 
+use Cookie;
 use App\Model;
 
 class UserSession extends Model {
@@ -41,12 +42,43 @@ class UserSession extends Model {
 	// Error Messages for model validation
 	public static $validation_errors = array();
 
+
 	/**
 	 * Relationship with users
 	 */
 	public function user() {
 		return $this->belongsTo('App\User', 'user_id', 'id');
 	}
+
+
+	/**
+	 * Filter active sessions
+	 * 
+	 */
+	public function active() {
+		return $this->where('expires_at', '>', date('Y-m-d H:i:s'));
+	}
+
+
+	/**
+	 * Sets the current session
+	 * 
+	 * @return UserSession
+	 */
+	public static function setCurrent($session) {
+		static::$current = $session;
+		
+		return static::$current;
+	}
+
+
+	/**
+	 * Unset the current session
+	 */
+	public static function unsetCurrent() {
+		static::$current = null;
+	}
+
 
 	/**
 	 * Retrieves the current session
@@ -61,14 +93,8 @@ class UserSession extends Model {
 		
 		return static::$current;
 	}
-	
-	/**
-	 * Unset the current session
-	 */
-	public static function unsetCurrent() {
-		static::$current = null;
-	}
-	
+
+
 	/**
 	 * Check if exists logged in session
 	 * 
@@ -77,4 +103,59 @@ class UserSession extends Model {
 	public static function isLoggedIn() {
 		return isset(static::$current);
 	}
+	
+	
+	/**
+	 * Changes the current session
+	 * 
+	 * @return UserSession
+	 */
+	public static function change($session_id) {
+		
+		if (is_null($session_id)) {
+			static::$current = $session_id;
+		}
+		elseif (is_a($session_id, __CLASS__)) {
+			static::$current = $session_id;
+		}
+		else {
+			static::$current = static::active()->where(static::primaryKey(), $session_id)->first();
+		}
+		
+		// Set cookie for current session
+		if (isset(static::$current->session_id)) {
+			static::setCookie(static::$current->session_id);
+		}
+		else {
+			static::removeCookie();
+		}
+		
+		return static::$current;
+	}
+
+	
+	/**
+	 * Sets the session cookie
+	 */
+	public static function setCookie($session_key) {
+		Cookie::queue(UserSession::$COOKIE_NAME, $session_key, UserSession::$LIFE_TIME);
+	}
+
+
+	/**
+	 * Gets the session cookie
+	 */
+	public static function getCookie() {
+		return Cookie::get(UserSession::$COOKIE_NAME, null);
+	}
+
+
+	/**
+	 * Removes the session cookie
+	 */
+	public static function removeCookie() {
+		Cookie::queue(UserSession::$COOKIE_NAME, '', '-10 year');
+	}
+	
+	
 }
