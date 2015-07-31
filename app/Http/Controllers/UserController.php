@@ -99,11 +99,13 @@ class UserController extends Controller
         // Create new session for the user
         $new_session = $this->createSession($user, $fb_session, $request->getClientIp());
 
-        // returh json success data
+        // Set session cookie
+        UserSession::setCookie($new_session->session_id);
+        
+        // return json success data
         return response()->json(['success' => 1, 
             'data' => array(
                 'session_id' => $new_session->session_id,
-                'fb_id'      => $user->fb_id
             )
         ]);
     }
@@ -112,10 +114,11 @@ class UserController extends Controller
     	// Unset current session
     	UserSession::unsetCurrent();
     	
-    	// Unset session cookie and redirect to Home page
-    	return redirect()->route('home.index')->withCookies(array(
-            cookie(UserSession::$COOKIE_NAME, '', '-10 year'),
-        ));
+    	// Remove session cookie
+    	UserSession::removeCookie();
+    	
+    	// redirect to Home page
+    	return redirect()->route('home.index');
     }
 
     private function getOrCreateUser($fb_session) {

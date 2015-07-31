@@ -11,21 +11,20 @@ class LoadUserSession implements TerminableMiddleware
 	public function handle($request, Closure $next)
 	{
 		// Get the UserSession ID from cookies
-		$session_id = $request->cookie(UserSession::$COOKIE_NAME);
+		$session_id = UserSession::getCookie();
 		
 		// If UserSession cookie is not defined, remove cookie
 		if (!$session_id) {
-			Cookie::queue(UserSession::$COOKIE_NAME, '', '-10 year'); // Unset cookie
+			UserSession::removeCookie();
 			return $next($request);
 		}
 
 		// Find the active session
-		$now = date('Y-m-d H:i:s');
-		$active_session = UserSession::where('session_id', '=', $session_id)->where('expires_at', '>', $now)->first();
+		$active_session = UserSession::active()->find($session_id);
 		
 		// If there is not active session for the cookie ID, remove cookie 
 		if (!$active_session) {
-			Cookie::queue(UserSession::$COOKIE_NAME, '', '-10 year'); // Unset cookie
+			UserSession::removeCookie();
 			return $next($request);
 		}
 
