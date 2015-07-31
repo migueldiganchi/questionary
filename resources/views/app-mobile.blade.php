@@ -22,6 +22,13 @@
 </head>
 <body>
 
+	<div id="ajax-locker">
+		<div class="transp-dark radius-5" id="ajax-loader">
+			<!-- @todo: <i class="loader"></i> -->
+			<span>Cargando...</span>
+		</div>
+	</div>
+
 	<div class="container-fluid">
 
 		<div class="row" id="header">
@@ -46,9 +53,10 @@
 					<div class="col-md-3">
 
 						<div class="btn-group-vertical hidden" role="group" id="options-menu">
-							<a class="btn btn-default questions">Tus preguntas</a>
-							<a class="btn btn-default invitations active">Invitaciones</a>
-							<a class="btn btn-default matchs">Partidas</a>
+							<a href="/" class="btn btn-default home">Inicio</a>
+							<a href="/questions" class="btn btn-default questions">Tus preguntas</a>
+							<a href="/invitations" class="btn btn-default invitations active">Invitaciones</a>
+							<a href="/matches" class="btn btn-default matches">Partidas</a>
 						</div>
 
 					</div>
@@ -94,6 +102,7 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap-toggle.min.js"></script>
 	<script src="/js/jquery.history.js"></script>
+	<script src="/js/jquery.cookie.js"></script>
 	<script src="/js/app.js"></script>
 </body>
 </html>

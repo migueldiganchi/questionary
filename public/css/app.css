@@ -9,6 +9,20 @@ h1.logo {
 	text-indent: -99999px;
 }
 
+.radius-5 {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.transp-dark {
+	background:rgb(0,0,0);  
+    background: transparent\9;  
+    background:rgba(0,0,0,0.4);  
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#66000000,endColorstr=#66000000);  
+    zoom: 1;  
+}
+
 #login_form { 
 	margin: 0 auto; 
 	text-align: center; 
@@ -36,6 +50,29 @@ h1.logo {
 		width: 90px; 
 	}
 
+#ajax-locker {
+	position: absolute;
+	text-align: center;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding-top: 10px;
+	z-index: 9999;
+	visibility: hidden;
+}
+
+#ajax-locker.visible {
+	visibility: visible;
+}
+
+#ajax-loader {
+	padding: 10px;
+	color: #fff;
+	max-width: 300px;
+	margin: 0 auto;
+}
+
 .container-fluid {
 	width: 800px;
 	margin: 0 auto;
@@ -52,10 +89,14 @@ h1.logo {
 	color: #111;	
 }
 
+	#options-menu a.home {
+		background-image: url('../img/icons/home.png');
+	}
+
 	#options-menu a.questions {
 		background-image: url('../img/icons/question.png');
 	}
-	#options-menu a.matchs {
+	#options-menu a.matches {
 		background-image: url('../img/icons/match.png');
 	}
 	#options-menu a.invitations {
