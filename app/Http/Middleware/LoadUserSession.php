@@ -20,7 +20,7 @@ class LoadUserSession implements TerminableMiddleware
 		}
 
 		// Find the active session
-		$active_session = UserSession::active()->find($session_id);
+		$active_session = (new UserSession)->active()->where('session_id', '=', $session_id)->first();
 		
 		// If there is not active session for the cookie ID, remove cookie 
 		if (!$active_session) {
