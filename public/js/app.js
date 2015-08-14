@@ -1,12 +1,3 @@
-var _server_data = {
-	APP_ID: null, 
-	APP_SCOPES: null, 
-	APP_FACEBOOK_VERSION: null
-};
-
-var ajax_locker = null, 
-	ajax_message = null;
-
 (function() {
 
 	// registramos el history
@@ -21,19 +12,19 @@ var ajax_locker = null,
 $(document).ready(function() {
 
 	// define controls
-	ajax_locker = $('#ajax-locker');
-	ajax_message = $('#ajax-locker #ajax-loader span');
+	var ajax_locker = $('#ajax-locker');
+	var ajax_message = $('#ajax-locker #ajax-loader span');
 
 	$.ajaxSetup({ cache: true });
 
 	$.getScript('//connect.facebook.net/es_AR/sdk.js', function() {
-
+		
 		// fb initialization
 		FB.init({
-			appId: '917191974988880',
+			appId: _CONFIG.FB_APP_ID,
 			status: true,
 			cookie: true,
-			version: 'v2.3'
+			version: _CONFIG.FB_APP_VERSION
 		});
  	
 		ajaxLoading(true, 'Verificando conexión...');
@@ -45,7 +36,7 @@ $(document).ready(function() {
 
 			ajaxLoading(true, 'Iniciando sesión...');
 
-			FB.login(handleFacebookResponse, { scope: 'public_profile, email, read_custom_friendlists, user_friends' });
+			FB.login(handleFacebookResponse, { scope: _CONFIG.FB_APP_SCOPES });
 		}
 
 		function handleFacebookResponse(fb_response) {
