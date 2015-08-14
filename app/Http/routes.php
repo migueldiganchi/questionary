@@ -21,22 +21,21 @@ $app->group(['namespace' => 'App\Http\Controllers'], function($group) {
 	$group->get('/', [
 		'as' 	=> 'home.index',
 		'uses' 	=> 'HomeController@index',
-		'middleware' => 'require-auth'
 	]);
 
 
 	//
 	// Authentication
 	//
-	$group->get('login', [
-		'as' 	=> 'user.login', 
-		'uses' 	=> 'UserController@login'
-	]);
+// 	$group->get('login', [
+// 		'as' 	=> 'user.login', 
+// 		'uses' 	=> 'UserController@login'
+// 	]);
 
-	$group->get('auth', [
-		'as' 	=> 'user.auth', 
-		'uses' 	=> 'UserController@auth'
-	]);
+// 	$group->get('auth', [
+// 		'as' 	=> 'user.auth', 
+// 		'uses' 	=> 'UserController@auth'
+// 	]);
 
 	$group->get('auth/facebook', [
 		'as' 	=> 'user.auth.facebook', 
