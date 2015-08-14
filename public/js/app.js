@@ -60,9 +60,6 @@ $(document).ready(function() {
 						return;
 					}
 
-					// @todo: fix this
-					Cookies.set('app_key', app_response.data.session_id);
-
 					$('#login').addClass('hidden');
 
 					$('#home, #options-menu').removeClass('hidden');
