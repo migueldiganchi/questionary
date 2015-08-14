@@ -14,13 +14,8 @@ use Facebook\FacebookRedirectLoginHelper;
 class HomeController extends Controller
 {
 
-    public function index(Request $request) {
+	public function index(Request $request) {
+		return view('home.index');
+	}
 
-        $fb_scopes = array('public_profile', 'email', 'read_custom_friendlists', 'user_friends');
-
-        $fb_helper = new FacebookRedirectLoginHelper(route('user.auth'));
-
-       	return view('home.index', compact('fb_helper', 'fb_scopes'));
-    }
-    
 }
