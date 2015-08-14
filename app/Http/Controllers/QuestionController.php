@@ -12,7 +12,7 @@ class QuestionController extends Controller
 
 		$session = UserSession::current();
 		$user = $session->user;
-		$questions = $user->questions()->orderBy('order', 'asc')->get();
+		$questions = $user->questions()->with(['answers'])->orderBy('order', 'asc')->get();
 		
 		return view('question.index', compact('session', 'user', 'questions'));
 	}

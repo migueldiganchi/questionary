@@ -1,11 +1,17 @@
-<!-- <img src="https://graph.facebook.com/facebook_user_id/picture?type=small"> -->
 <h2>Tus Preguntas</h2>
 
 @if ($questions)
 	<ul class="list questions-list">
 		@foreach($questions as $question)
 			<li class="question">
-				<p><a href="#" data-question-id="{{$question->id}}">{{ $question->text }}</a></p>
+				<p><a href="#" data-question-id="{{ $question->id }}">{{ $question->text }}</a></p>
+				@if ($question->answers)
+				<ol class="list answers-list">
+					@foreach($question->answers as $answer)
+						<li><p>{{ $answer->text }}</p></li>
+					@endforeach
+				</ol>
+				@endif
 			</li>
 		@endforeach
 	</ul>
