@@ -2,6 +2,7 @@
 
 use Closure;
 
+use App\Http\Controllers\Controller;
 use App\UserSession;
 
 class RequireAuth
@@ -9,15 +10,19 @@ class RequireAuth
 
 	public function handle($request, Closure $next)
 	{
-		// Get current session		
+		// Get current session
 		$current_session = UserSession::current();
-		
-		// If is not logged in redirect to login page		
+
+		// If is not logged in redirect to login page
 		if (!$current_session) {
-			return redirect('login');
-		}		    	
+			if ($request->ajax()) {
+				return Controller::responseJsonError('LOGIN_REQUIRED', 'El usuario no esta logueado');
+			}
+			
+			return redirect()->route('home.index');;
+		}
 
 		return $next($request);
-    }
+	}
 
 }
