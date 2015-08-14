@@ -5,7 +5,7 @@ use Laravel\Lumen\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
 
-	function showFormatedObject($obj, $obj_name) {
+	public static function showFormatedObject($obj, $obj_name) {
 		echo "<pre> {$obj_name} = ". print_r($obj, true) . "</pre>";
 	}
 
@@ -16,7 +16,7 @@ class Controller extends BaseController
 	 * @param mixed $data
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	function responseJsonSuccess($data) {
+	public static function responseJsonSuccess($data) {
 		return response()->json([
 			'success' => 1, 
 			'data' => $data,
@@ -31,7 +31,7 @@ class Controller extends BaseController
 	 * @param mixed $data
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	function responseJsonError($code, $message, $data = null) {
+	public static function responseJsonError($code, $message, $data = null) {
 		// Define error
 		$error = [
 			'code' => $code,
