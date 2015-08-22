@@ -1,6 +1,6 @@
 <h2>Tus Partidas</h2>
 
-@if ($matches)
+@if (!$matches->isEmpty())
 	<ul class="list matches-list">
 		@foreach($matches as $match)
 			<li class="match">

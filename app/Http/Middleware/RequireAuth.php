@@ -15,8 +15,11 @@ class RequireAuth
 
 		// If is not logged in redirect to login page
 		if (!$current_session) {
+
 			if ($request->ajax()) {
+
 				return Controller::responseJsonError('LOGIN_REQUIRED', 'El usuario no esta logueado');
+				
 			}
 			
 			return redirect()->route('home.index');;

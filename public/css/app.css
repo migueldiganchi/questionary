@@ -26,7 +26,6 @@ h1.logo {
 #login_form { 
 	margin: 0 auto; 
 	text-align: center; 
-	border: solid 1px blue;
 }
 
 	#login_form input[type=submit] { 

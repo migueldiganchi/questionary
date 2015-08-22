@@ -1,12 +1,12 @@
-(function() {
+// (function() {
 
-	// registramos el history
-	var history = window.History;
-	if (!history.enabled) {
-		return false; // @todo: handle this
-	}
+// 	// registramos el history
+// 	var history = window.History;
+// 	if (!history.enabled) {
+// 		return false; // @todo: handle this
+// 	}
 
-})();
+// })();
 
 
 $(document).ready(function() {
@@ -14,6 +14,11 @@ $(document).ready(function() {
 	// define controls
 	var ajax_locker = $('#ajax-locker');
 	var ajax_message = $('#ajax-locker #ajax-loader span');
+
+	var panel_home = $('.panel#home');
+	var panel_questions = $('.panel#questions');
+	var panel_invitations = $('.panel#invitations');
+	var panel_matches = $('.panel#matches');
 
 	$.ajaxSetup({ cache: true });
 
@@ -66,6 +71,12 @@ $(document).ready(function() {
 
 					ajaxLoading(false);
 
+					/* @todo: fix this */
+					
+					var first = $('.btn-group-vertical .btn:first');
+					
+					$(first).click();
+
 				}, 'json');
 
 			} else if (fb_response.status === 'not_authorized') {
@@ -81,7 +92,6 @@ $(document).ready(function() {
 				$('#home').addClass('hidden');
 
 				ajaxLoading(false);
-
 			}
 		}
 
@@ -98,30 +108,26 @@ $(document).ready(function() {
 		$('.btn-group-vertical .btn').click(function(e) {
 			var item = $(this);
 			var url = $(this).attr('href');
-			// var session_id = 0; // /* @todo: read */ $.cookie('session_id');
 			var session_id = Cookies.get('app_key');
+			var panel_id = $(this).attr('data-panel-id');
+			var panel = $(".panel#" + panel_id);
 
 			if (!url) {
 				showMessage(true, 'Debe indicar una dirección')
 				return;
 			}
 
-			// cambiamos el state del browser
-			history.pushState({}, null, url);
-
-			alert("calling to: " + url);
-
 			// solicitamos al server 
 			ajaxLoading(true, 'Cargando pantalla...');
-			$.get(url, {
-				session_id : session_id
-			}, function(response) {
+
+			$.get(url, { session_id : session_id }, function(response) {
 
 				$(item).siblings().removeClass('active');
+
 				$(item).addClass('active');
-			
-				console.log(response);
-				// $('').html(response);
+
+				activatePanel(panel, response);
+
 				ajaxLoading(false);
 
 			}, 'html');
@@ -133,6 +139,15 @@ $(document).ready(function() {
 	});
 
 	/* __ end facebook api __ */
+
+	function activatePanel(panel, response) {
+
+		$('.panel').addClass('hidden');
+
+		$(panel).removeClass('hidden');
+
+		$(panel).html(response);
+	}
 
 	function showMessage(show, message, type) {
 

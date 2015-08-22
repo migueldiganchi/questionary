@@ -11,7 +11,7 @@ class MatchController extends Controller
 	public function index(Request $request) {
 		$session = UserSession::current();
 		$user = $session->user;
-		$matches = $user->matches()->with(['host', 'guest'])->orderBy('order', 'asc')->get();
+		$matches = $user->matches()->with(['host', 'guest'])->get();
 		
 		return view('match.index', compact('session', 'user', 'matches'));
 	}

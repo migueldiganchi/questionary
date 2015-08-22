@@ -15,6 +15,11 @@ class HomeController extends Controller
 {
 
 	public function index(Request $request) {
+
+		if ($request->ajax()) {
+			return view('home._home');			
+		}
+
 		return view('home.index');
 	}
 

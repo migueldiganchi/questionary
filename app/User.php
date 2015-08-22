@@ -104,7 +104,7 @@ class User extends Model
 	 * Relationship with matches
 	 */
 	public function matches() {
-		return $this->hasMany('App\Match', 'user_id', 'id');
+		return $this->hasMany('App\Match', 'host_id', 'id');
 	}
 
 }

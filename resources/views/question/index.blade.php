@@ -1,6 +1,6 @@
 <h2>Tus Preguntas</h2>
 
-@if ($questions)
+@if (!$questions->isEmpty())
 	<ul class="list questions-list">
 		@foreach($questions as $question)
 			<li class="question">

@@ -1,6 +1,6 @@
 <h2>Tus Preguntas</h2>
 
-@if ($invitations)
+@if (!$invitations->isEmpty())
 	<ul class="list" id="invitations-list">
 		@foreach($invitations as $invitation)
 			<li class="invitation">
